@@ -27,6 +27,44 @@ jwt.sing({
   data: 'foobar'
 }, 'secret');
 
+jwt.sign({
+  data: 'foobar'
+}, 'secret', { expiresIn: 60 * 60 });
+
+jwt.sign({
+  data: 'foobar'
+}, 'secret', { expiresIn: '1h' });
+
+var decoded = jwt.verify(token, 'shhhh');
+console.log(decoded.foo)
+jwt.verify(token, 'shhhh', function(err, decoded){
+  console.log(decoded.foo)
+});
+try {
+  var decoded = jwt.verify(token, 'wrong-secret');
+} catch(err){
+  //err
+}
+var cert = fs.readFileSync('public.pem');
+jwt.verify(token, cert, function(err, decoded){
+  console.log(decoded.foo)
+});
+var cert = fs.readFileSync('public.pem');
+jwt.verify(token, cert, { audience: 'urn:foo' }, function(err, decoded){
+});
+var cert = fs.readFileSync('public.pem');
+jwt.verify(token, cert, { audience: 'urn:foo', issuer: 'urn:issuer' }, function(err, decoded){
+});
+var cert = fs.readFileSync('public.pem');
+jwt.verify(token, cert, {}, function(){});
+
+
+
+
+
+
+
+
 
 
 
