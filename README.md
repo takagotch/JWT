@@ -121,6 +121,28 @@ jwt.verify(token, 'shhhh', function(err, decoded){
 
 ```
 
-```
+```go
+algorithm := jwt.HmacSha256("ThisIsTheSecret")
+
+claims := jwt.NewClaim()
+claims.Set("Role", "Admin")
+
+token, err := algorithm.Encode(claim)
+if err != nil {
+  panic(err)
+}
+
+if algorithm.Validate(token) == nil {
+  //
+}
+
+claims, err := algorithm.Decode(token)
+if err != nil {
+  panic(err)
+}
+_, role := claims.Get("Role")
+if strings.Compare(role, "Admin") {
+  //
+}
 ```
 
